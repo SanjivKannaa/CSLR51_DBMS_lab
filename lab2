@@ -1,0 +1,489 @@
+1.
+CREATE TABLE AUTHOR(author_id INT,name VARCHAR(20),city VARCHAR(20),country VARCHAR(20));
+CREATE TABLE PUBLISHER(publisher_id INT,name VARCHAR(20),city VARCHAR(20),country VARCHAR(20));
+CREATE TABLE CATALOG(book_id INT,author_id INT,publisher_id INT,category_id INT,year INT,price INT);
+CREATE TABLE CATEGORY(category_id INT,DESCRIPTION varchar(20));
+CREATE TABLE ORDER_DETAILS(order_no INT,book_id INT,quantity INT);
+
+ALTER TABLE PUBLISHER ADD PRIMARY KEY(publisher_id);
+ALTER TABLE CATALOG ADD PRIMARY KEY(book_id,author_id,publisher_id,category_id);
+ALTER TABLE CATEGORY ADD PRIMARY KEY(category_id);
+ALTER TABLE ORDER_DETAILS ADD PRIMARY KEY(order_no,book_id);
+
+DESC AUTHOR;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| author_id | int         | NO   | PRI | NULL    |       |
+| name      | varchar(20) | YES  |     | NULL    |       |
+| city      | varchar(20) | YES  |     | NULL    |       |
+| country   | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC PUBLISHER;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| publisher_id | int         | NO   | PRI | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| city         | varchar(20) | YES  |     | NULL    |       |
+| country      | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC CATALOG;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| book_id      | int  | NO   | PRI | NULL    |       |
+| author_id    | int  | NO   | PRI | NULL    |       |
+| publisher_id | int  | NO   | PRI | NULL    |       |
+| category_id  | int  | NO   | PRI | NULL    |       |
+| year         | int  | YES  |     | NULL    |       |
+| price        | int  | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> DESC ORDER_DETAILS;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| order_no | int  | NO   | PRI | NULL    |       |
+| book_id  | int  | NO   | PRI | NULL    |       |
+| quantity | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+
+INSERT INTO PUBLISHER VALUES(1,'Sanjiv','Trichy','India'),(2,'Soma','Trichy','India'),(3,'srivinesh','Trichy','India'),(4,'Mano','Trichy','India'),(5,'Nitin','Trichy','India')
+    -> ;
+
+INSERT INTO CATALOG VALUES(1,1,1,1,2023,7200,'SQL'),(2,2,2,2,2023,5200,'C++', 'Cotlin');
+
+INSERT INTO CATEGORY VALUES(1,'V Good'),(2,'V Good'),(3,'Exellent'),(4,'Good');
+
+INSERT INTO ORDER_DETAILS VALUES(1,1,200),(2,2,230),(3,3,300),(4,4,210),(5,5,100);
+
+SELECT COUNT(author_id) FROM AUTHOR;
++------------------+
+| COUNT(author_id) |
++------------------+
+|                5 |
++------------------+
+
+
+2.
+CREATE TABLE Book(Acc_no INT,Yr_pib INT,title VARCHAR(20));
+DESC Book;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Acc_no | int         | YES  |     | NULL    |       |
+| Yr_pib | int         | YES  |     | NULL    |       |
+| title  | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+INSERT INTO Book VALUES(734216,1982,'Algorithm design'),(237235,1995,'Database systems'),(631523,1992,'Compiler design'),(543211,1991,'programming'),(376112,1992,'Machine design');
+
+SELECT * FROM Book;
++--------+--------+------------------+
+| Acc_no | Yr_pib | title            |
++--------+--------+------------------+
+| 237235 |   1995 | Database systems |
+| 376112 |   1992 | Machine design   |
+| 543211 |   1991 | programming      |
+| 631523 |   1992 | Compiler design  |
+| 734216 |   1982 | Algorithm design |
++--------+--------+------------------+
+5 rows in set (0.00 sec)
+
+SELECT title,Acc_no FROM Book;
++------------------+--------+
+| title            | Acc_no |
++------------------+--------+
+| Database systems | 237235 |
+| Machine design   | 376112 |
+| programming      | 543211 |
+| Compiler design  | 631523 |
+| Algorithm design | 734216 |
++------------------+--------+
+
+SELECT * FROM Book WHERE Yr_pib =1992;
++--------+--------+-----------------+
+| Acc_no | Yr_pib | title           |
++--------+--------+-----------------+
+| 376112 |   1992 | Machine design  |
+| 631523 |   1992 | Compiler design |
++--------+--------+-----------------+
+
+SELECT * FROM Book WHERE Acc_no>=56782;
++--------+--------+------------------+
+| Acc_no | Yr_pib | title            |
++--------+--------+------------------+
+| 237235 |   1995 | Database systems |
+| 376112 |   1992 | Machine design   |
+| 543211 |   1991 | programming      |
+| 631523 |   1992 | Compiler design  |
+| 734216 |   1982 | Algorithm design |
++--------+--------+------------------+
+
+SELECT Acc_no AS SERIAL_NO
+    -> FROM Book;
++-----------+
+| SERIAL_NO |
++-----------+
+|    237235 |
+|    376112 |
+|    543211 |
+|    631523 |
+|    734216 |
++-----------+
+
+SELECT Yr_pib AS YEAR FROM Book;
++------+
+| YEAR |
++------+
+| 1995 |
+| 1992 |
+| 1991 |
+| 1992 |
+| 1982 |
++------+
+
+3.
+CREATE TABLE branch(branch_name VARCHAR(20),branch_city VARCHAR(20),assets VARCHAR(20));
+
+
+CREATE TABLE customer(customer_name VARCHAR(20),customer_city VARCHAR(20),cutomer_street VARCHAR(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE account(account_number IBT,branch_name VARCHAR(20),balance INT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IBT,branch_name VARCHAR(20),balance INT)' at line 1
+mysql> CREATE TABLE account(account_number INT,branch_name VARCHAR(20),balance INT);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE loan(loan_number INT,branch_name VARCHAR(20),aount INT);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DROP TABLE loan;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE loan(loan_number INT,branch_name VARCHAR(20),amount INT);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE depositor(customer_name VARCHAR(20),account_number INT);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE borrower(customer_name VARCHAR(20),loan_number INT);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT title,Acc_no FROM Book;
++------------------+--------+
+| title            | Acc_no |
++------------------+--------+
+| Database systems | 237235 |
+| Machine design   | 376112 |
+| programming      | 543211 |
+| Compiler design  | 631523 |
+| Algorithm design | 734216 |
++------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Book WHERE Yr_pib =1992;
++--------+--------+-----------------+
+| Acc_no | Yr_pib | title           |
++--------+--------+-----------------+
+| 376112 |   1992 | Machine design  |
+| 631523 |   1992 | Compiler design |
++--------+--------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Book WHERE Acc_no>=56782;
++--------+--------+------------------+
+| Acc_no | Yr_pib | title            |
++--------+--------+------------------+
+| 237235 |   1995 | Database systems |
+| 376112 |   1992 | Machine design   |
+| 543211 |   1991 | programming      |
+| 631523 |   1992 | Compiler design  |
+| 734216 |   1982 | Algorithm design |
++--------+--------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Acc_no AS SERIAL_NO
+    -> FROM Book;
++-----------+
+| SERIAL_NO |
++-----------+
+|    237235 |
+|    376112 |
+|    543211 |
+|    631523 |
+|    734216 |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Yr_pib AS YEAR FROM Book;
++------+
+| YEAR |
++------+
+| 1995 |
+| 1992 |
+| 1991 |
+| 1992 |
+| 1982 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> DESC Book;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Acc_no | int         | NO   | PRI | NULL    |       |
+| Yr_pib | int         | NO   | PRI | NULL    |       |
+| title  | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO branch VALUES('sanjiv','Trichy','GGGG'),('srivignesh','Trichy','GGG'),('Nitin','Trichy','GGGGG'),('Sri','Trichy','GGG'),('Bhop',Trichy','GGGG');
+    '> ;
+    '> ^C^C
+
+^C
+mysql>
+mysql> INSERT INTO branch VALUES('sanjiv','Trichy','GGGG'),('soma','Trichy','GGG'),('Nitin','Trichy','GGGGG'),('Sri','Trichy','GGG'),('bhoop',Trichy','GGGG');
+    '>
+[2]+  Stopped                 sudo mysql
+nitt@nitt-OptiPlex-7470-AIO:~/Desktop/DBMS$ sudo mysql
+[sudo] password for nitt:
+Sorry, try again.
+[sudo] password for nitt:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.33-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> INSERT INTO branch VALUES('Soma','Trichy','GGGG'),('San','Trichy','GGG'),('Nitin','Trichy','GGGGG'),('Sri','Trichy','GGG'),('Jam',Trichy','GGGG');
+    '> ^C^C^C^C^C^C^C
+
+^C
+mysql> DESC branch
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> use db;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> DESC branch;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| branch_name | varchar(20) | YES  |     | NULL    |       |
+| branch_city | varchar(20) | YES  |     | NULL    |       |
+| assets      | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO branch VALUES('Soma','Trichy','GGGG'),('San','Trichy','GGG'),('Nitin','Trichy','GGGGG'),('Sri','Trichy','GGG'),('Jam',Trichy','GGGG');
+    '> INSERT INTO EMP
+
+^C
+mysql> SELECT COUNT(author_id) FROM author;
+ERROR 1146 (42S02): Table 'db.author' doesn't exist
+mysql> SELECT COUNT(author_id) FROM AUTHOR;
++------------------+
+| COUNT(author_id) |
++------------------+
+|                5 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO branch VALUES('Soma','Trichy','GGGG');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO branch VALUES('San','Trichy','GGG');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO branch VALUES('Nitin','Trichy','GGGGG'),('Sri','Trichy','GGG'),('Jam',Trichy','GGGG');
+    '>
+
+^C
+mysql> INSERT INTO branch VALUES('Nitin','Trichy','GGGGG');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO branch VALUES('Jam',Trichy','GGGG');
+    '> ^[[A
+       INSERT INTO branch VALUES('Jam',Trichy','GGGG');
+^C
+mysql> INSERT INTO branch VALUES('Jam','Trichy','GGGG');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO branch VALUES('Sri','Trichy','GGG');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO customer VALUES('Soma','Trichy1','GGGG'),('San','Trichy2','GGG'),('Nitin','Trichy1','GGGGG'),('Sri','Trichy2','GGG'),('Jam','Trichy1','GGGG')
+;
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO customer VALUES(1,'Soma',32000),(2,'San',12000),(3,'Nitin',23000),(4,'Sri',20050),(5,'Jam',25000);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO customer VALUES('Soma','Trichy1','GGGG'),('San','Trichy2','GGG'),('Nitin','Trichy1','GGGGG'),('Sri','Trichy2','GGG'),('Jam','Trichy1','GGGG');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO account VALUES(1,'Soma',32000),(2,'San',12000),(3,'Nitin',23000)
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO loan VALUES(1,'Soma',2000),(2,'San',1000),(3,'Nitin',3000),(4,'Sri',50),(5,'Jam',2500);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO depositor VALUES('Soma',1),('San',2),('Nitin',3),('Sri',4),('Jam',5);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO borrower VALUES('Soma',1),('San',2),('Nitin',3),('Sri',4),('J
+am',5);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM branch;
++-------------+-------------+--------+
+| branch_name | branch_city | assets |
++-------------+-------------+--------+
+| Soma        | Trichy      | GGGG   |
+| San         | Trichy      | GGG    |
+| Nitin       | Trichy      | GGGGG  |
+| Jam         | Trichy      | GGGG   |
+| Sri         | Trichy      | GGG    |
++-------------+-------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM customer;
++---------------+---------------+----------------+
+| customer_name | customer_city | cutomer_street |
++---------------+---------------+----------------+
+| Soma          | Trichy1       | GGGG           |
+| San           | Trichy2       | GGG            |
+| Nitin         | Trichy1       | GGGGG          |
+| Sri           | Trichy2       | GGG            |
+| Jam           | Trichy1       | GGGG           |
+| 1             | Soma          | 32000          |
+| 2             | San           | 12000          |
+| 3             | Nitin         | 23000          |
+| 4             | Sri           | 20050          |
+| 5             | Jam           | 25000          |
+| Soma          | Trichy1       | GGGG           |
+| San           | Trichy2       | GGG            |
+| Nitin         | Trichy1       | GGGGG          |
+| Sri           | Trichy2       | GGG            |
+| Jam           | Trichy1       | GGGG           |
++---------------+---------------+----------------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT * FROM account;
++----------------+-------------+---------+
+| account_number | branch_name | balance |
++----------------+-------------+---------+
+|              1 | Soma        |   32000 |
+|              2 | San         |   12000 |
+|              3 | Nitin       |   23000 |
+|              4 | Sri         |   20050 |
+|              5 | Jam         |   25000 |
++----------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM loan;
++-------------+-------------+--------+
+| loan_number | branch_name | amount |
++-------------+-------------+--------+
+|           1 | Soma        |   2000 |
+|           2 | San         |   1000 |
+|           3 | Nitin       |   3000 |
+|           4 | Sri         |     50 |
+|           5 | Jam         |   2500 |
++-------------+-------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM depsitor;
+ERROR 1146 (42S02): Table 'db.depsitor' doesn't exist
+mysql> SELECT * FROM depositor;
++---------------+----------------+
+| customer_name | account_number |
++---------------+----------------+
+| Soma          |              1 |
+| San           |              2 |
+| Nitin         |              3 |
+| Sri           |              4 |
+| Jam           |              5 |
++---------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM borrower;
++---------------+-------------+
+| customer_name | loan_number |
++---------------+-------------+
+| Soma          |           1 |
+| San           |           2 |
+| Nitin         |           3 |
+| Sri           |           4 |
+| Jam           |           5 |
++---------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT loan FROM amount WHERE loan>=12000;
+ERROR 1146 (42S02): Table 'db.amount' doesn't exist
+mysql> SELECT loan FROM account WHERE loan>=12000;
+ERROR 1054 (42S22): Unknown column 'loan' in 'field list'
+mysql> SELECT ammount FROM loan WHERE loan>=12000;
+ERROR 1054 (42S22): Unknown column 'ammount' in 'field list'
+mysql> SELECT amount FROM loan WHERE loan>=12000;
+ERROR 1054 (42S22): Unknown column 'loan' in 'where clause'
+mysql> SELECT amount FROM loan WHERE amount>=12000;
+Empty set (0.00 sec)
+
+mysql> SELECT branch_name FROM branch WHERE branch_city='Trichy';
++-------------+
+| branch_name |
++-------------+
+| Soma        |
+| San         |
+| Nitin       |
+| Jam         |
+| Sri         |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT customer_name FROM depositor WHERE account_number=1;
++---------------+
+| customer_name |
++---------------+
+| Soma          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT customer_name FROM customer WHERE customer_name='S%';
+Empty set (0.00 sec)
+
+SELECT customer_name FROM customer WHERE customer_name LIKE 'S%';
++---------------+
+| customer_name |
++---------------+
+| Soma          |
+| San           |
+| Sri           |
+| Soma          |
+| San           |
+| Sri           |
++---------------+

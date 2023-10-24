@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Tue Oct 24 11:36:38 IST 2023 -->
+
+
+<EmployeeDetails> 
+    <Employee> 
+        <EmpNo>1</EmpNo>
+        <EName>Soma</EName>
+        <Job>SDE</Job>
+        <Project>1</Project>
+        <Dept>CSE</Dept>
+        <DeptNo>1</DeptNo>
+        <Salary>1000000</Salary>
+    </Employee>
+    <Employee> 
+        <EmpNo>2</EmpNo>
+        <EName>Sanjiv</EName>
+        <Job>Devops</Job>
+        <Project>2</Project>
+        <Dept>CSE</Dept>
+        <DeptNo>1</DeptNo>
+        <Salary>1500000</Salary>
+    </Employee>
+    <Employee> 
+        <EmpNo>3</EmpNo>
+        <EName>Sri</EName>
+        <Job>Trader</Job>
+        <Project>3</Project>
+        <Dept>DS</Dept>
+        <DeptNo>2</DeptNo>
+        <Salary>10000000</Salary>
+    </Employee>
+    <Employee> 
+        <EmpNo>4</EmpNo>
+        <EName>Mano</EName>
+        <Job>Manager</Job>
+        <Project>4</Project>
+        <Dept>HumanResouces</Dept>
+        <DeptNo>13</DeptNo>
+        <Salary>20000000</Salary>
+    </Employee>
+    <Employee> 
+        <EmpNo>5</EmpNo>
+        <EName>Nitin</EName>
+        <Job>AppDev</Job>
+        <Project>5</Project>
+        <Dept>Research</Dept>
+        <DeptNo>1</DeptNo>
+        <Salary>1000000</Salary>
+    </Employee>
+</EmployeeDetails> 

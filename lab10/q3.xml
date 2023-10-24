@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Tue Oct 24 11:14:52 IST 2023 -->
+
+
+<FlightDetails> 
+    <Flight> 
+        <FlNo>1</FlNo>
+        <FlName>Lufthansa</FlName>
+        <PilotName>Soma</PilotName>
+        <From>Chennai</From>
+        <To>Trichy</To>
+        <Date>2020-12-04</Date>
+        <DepartureTime>3:00</DepartureTime>
+        <ArrivesTime>6:00</ArrivesTime>
+        <Price>15000</Price>
+    </Flight>
+    
+    <Flight> 
+        <FlNo>2</FlNo>
+        <FlName>Kingfisher</FlName>
+        <PilotName>Saraku</PilotName>
+        <From>Trichy</From>
+        <To>Bihar</To>
+        <Date>2020-12-04</Date>
+        <DepartureTime>2:45</DepartureTime>
+        <ArrivesTime>6:00</ArrivesTime>
+        <Price>20000</Price>
+    </Flight>
+    
+    <Flight> 
+        <FlNo>3</FlNo>
+        <FlName>Boeing</FlName>
+        <PilotName>Sanjiv</PilotName>
+        <From>Trichy</From>
+        <To>Bangkok</To>
+        <Date>2020-12-04</Date>
+        <DepartureTime>10:00</DepartureTime>
+        <ArrivesTime>12:00</ArrivesTime>
+        <Price>40000</Price>
+    </Flight>
+    <Flight> 
+        <FlNo>4</FlNo>
+        <FlName>Oldmonk</FlName>
+        <PilotName>Mano</PilotName>
+        <From>Salem</From>
+        <To>Erode</To>
+        <Date>2020-12-04</Date>
+        <DepartureTime>5:00</DepartureTime>
+        <ArrivesTime>7:30</ArrivesTime>
+        <Price>12000</Price>
+    </Flight>
+    
+    <Flight> 
+        <FlNo>5</FlNo>
+        <FlName>Corona</FlName>
+        <PilotName>Nitin</PilotName>
+        <From>Trichy</From>
+        <To>Hosur</To>
+        <Date>2020-12-04</Date>
+        <DepartureTime>6:45</DepartureTime>
+        <ArrivesTime>9:00</ArrivesTime>
+        <Price>4000</Price>
+    </Flight>
+    
+</FlightDetails> 
+

@@ -1,0 +1,191 @@
+1)
+CREATE TABLE EMP( EMPNO INT(10),EFNAME VARCHAR(20),ELNAME VARCHAR(20),JOB VARCHAR (10),DEPTNAME VARCHAR (10),DEPTNO INT (2),ECITY VARCHAR (10),SAL INT (7),WORKEXPERIENCE INT(10),MANAGERNAME VARCHAR (10),MANAGERNO INT (20),PRIMARY KEY(DEPTNO) );
+
+CREATE TABLE dept( DEPTNO INT(2), DNAME VARCHAR(10), LOC VARCHAR(10), LOCID INT(5) );
+
+ALTER TABLE EMP ADD PRIMARY KEY(EMPNO);
+
+ALTER TABLE EMP ADD FOREIGN KEY (DEPTNO) references EMP(EMPNO);
+
+INSERT INTO EMP VALUES(1,'SOMA','VIGNESH','ENG','CSE',1,'CHENNAI',1000000,1,'MANAGER1',1),(2,'SANJIV','KANNA','DOC','MEDICINE',2,'DELHI',2000000,2,'MANAGER2',2),(3,'SRI','VIGNESH','YT','SHORTS',3,'KOLKATA',3000000,3,'MANAGER3',3),(4,'NITIN','KUMAR','TEACHER','ENGLISH',4,'HOSUR',4000000,4,'MANAGER4',4),(5,'ABHI','MANO','CEO','ALL',5,'BANGALORE',5000000,5,'MANAGER5',5);
+
++-------+--------+---------+---------+----------+--------+-----------+---------+----------------+-------------+-----------+
+| EMPNO | EFNAME | ELNAME  | JOB     | DEPTNAME | DEPTNO | ECITY     | SAL     | WORKEXPERIENCE | MANAGERNAME | MANAGERNO |
++-------+--------+---------+---------+----------+--------+-----------+---------+----------------+-------------+-----------+
+|     1 | SOMA   | VIGNESH | ENG     | CSE      |      1 | CHENNAI   | 1000000 |              1 | MANAGER1    |         1 |
+|     2 | SANJIV | KANNA   | DOC     | MEDICINE |      2 | DELHI     | 2000000 |              2 | MANAGER2    |         2 |
+|     3 | SRI    | VIGNESH | YT      | SHORTS   |      3 | KOLKATA   | 3000000 |              3 | MANAGER3    |         3 |
+|     4 | NITIN  | KUMAR   | TEACHER | ENGLISH  |      4 | HOSUR     | 4000000 |              4 | MANAGER4    |         4 |
+|     5 | ABHI   | MANO    | CEO     | ALL      |      5 | BANGALORE | 5000000 |              5 | MANAGER5    |         5 |
++-------+--------+---------+---------+----------+--------+-----------+---------+----------------+-------------+-----------+
+
+INSERT INTO dept VALUES(1,'CSE','CHENNAI',1),(2,'MEDICINE','DELHI',2),(3,'SHORTS','KOLKATA',3),(4,'ENGLISH','HOSUR',4),(5,'ALL','BANGALORE',5);
+
++--------+----------+-----------+-------+
+| DEPTNO | DNAME    | LOC       | LOCID |
++--------+----------+-----------+-------+
+|      1 | CSE      | CHENNAI   |     1 |
+|      2 | MEDICINE | DELHI     |     2 |
+|      3 | SHORTS   | KOLKATA   |     3 |
+|      4 | ENGLISH  | HOSUR     |     4 |
+|      5 | ALL      | BANGALORE |     5 |
++--------+----------+-----------+-------+
+
+2)
+SELECT ELNAME,DEPTNO,DEPTNAME FROM EMP;
++---------+--------+----------+
+| ELNAME  | DEPTNO | DEPTNAME |
++---------+--------+----------+
+| VIGNESH |      1 | CSE      |
+| KANNA   |      2 | MEDICINE |
+| VIGNESH |      3 | SHORTS   |
+| KUMAR   |      4 | ENGLISH  |
+| MANO    |      5 | ALL      |
++---------+--------+----------+
+
+3)
+SELECT EMP.JOB,dept.LOC FROM EMP,dept
+WHERE EMP.DEPTNO=80;
+Empty set
+
+4)
+SELECT EMP.ELNAME,EMP.DEPTNAME,dept.LOCID,EMP.ECITY FROM EMP inner JOIN dept ON EMP.DEPTNO=dept.DEPTNO WHERE EMP.SAL>=10000;
++---------+----------+-------+-----------+
+| ELNAME  | DEPTNAME | LOCID | ECITY     |
++---------+----------+-------+-----------+
+| VIGNESH | CSE      |     1 | CHENNAI   |
+| KANNA   | MEDICINE |     2 | DELHI     |
+| VIGNESH | SHORTS   |     3 | KOLKATA   |
+| KUMAR   | ENGLISH  |     4 | HOSUR     |
+| MANO    | ALL      |     5 | BANGALORE |
++---------+----------+-------+-----------+
+
+5)
+SELECT ELNAME,DEPTNAME FROM EMP WHERE EFNAME LIKE '%a%';
++---------+----------+
+| ELNAME  | DEPTNAME |
++---------+----------+
+| VIGNESH | CSE      |
+| KANNA   | MEDICINE |
+| MANO    | ALL      |
++---------+----------+
+
+6)
+SELECT ELNAME,EMPNO,MANAGERNAME,MANAGERNO FROM EMP;
++---------+-------+-------------+-----------+
+| ELNAME  | EMPNO | MANAGERNAME | MANAGERNO |
++---------+-------+-------------+-----------+
+| VIGNESH |     1 | MANAGER1    |         1 |
+| KANNA   |     2 | MANAGER2    |         2 |
+| VIGNESH |     3 | MANAGER3    |         3 |
+| KUMAR   |     4 | MANAGER4    |         4 |
+| MANO    |     5 | MANAGER5    |         5 |
++---------+-------+-------------+-----------+
+
+7)
+SELECT ELNAME,JOB,DEPTNO,DEPTNAME FROM EMP
+    -> WHERE ECITY ='toronto';
+Empty set
+
+8)
+SELECT * FROM EMP
+    -> WHERE MANAGERNAME = NULL
+    -> ORDER BY EMPNO DESC;
+Empty set
+
+9)
+SELECT s.ELNAME,s.DEPTNO FROM EMP s JOIN EMP p WHERE s.DEPTNAME=p.DEPTNAME;
++---------+--------+
+| ELNAME  | DEPTNO |
++---------+--------+
+| VIGNESH |      1 |
+| KANNA   |      2 |
+| VIGNESH |      3 |
+| KUMAR   |      4 |
+| MANO    |      5 |
++---------+--------+
+
+10)
+SELECT SUM(SAL),AVG(SAL) FROM EMP;
++----------+--------------+
+| SUM(SAL) | AVG(SAL)     |
++----------+--------------+
+| 15000000 | 3000000.0000 |
++----------+--------------+
+
+11)
+SELECT * FROM EMP WHERE WORKEXPERIENCE=(SELECT MAX(WORKEXPERIENCE) FROM
+EMP);
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+| EMPNO | EFNAME | ELNAME | JOB  | DEPTNAME | DEPTNO | ECITY     | SAL     | WORKEXPERIENCE | MANAGERNAME | MANAGERNO |
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+|     5 | ABHI   | MANO   | CEO  | ALL      |      5 | BANGALORE | 5000000 |              5 | MANAGER5    |         5 |
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+
+
+12)
+SELECT COUNT(EMPNO) FROM EMP;
++--------------+
+| COUNT(EMPNO) |
++--------------+
+|            5 |
++--------------+
+
+13)
+SELECT * FROM EMP WHERE WORKEXPERIENCE=(SELECT MIN(WORKEXPERIENCE) FROM EMP);
++-------+--------+---------+------+----------+--------+---------+---------+----------------+-------------+-----------+
+| EMPNO | EFNAME | ELNAME  | JOB  | DEPTNAME | DEPTNO | ECITY   | SAL     | WORKEXPERIENCE | MANAGERNAME | MANAGERNO |
++-------+--------+---------+------+----------+--------+---------+---------+----------------+-------------+-----------+
+|     1 | SOMA   | VIGNESH | ENG  | CSE      |      1 | CHENNAI | 1000000 |              1 | MANAGER1    |         1 |
++-------+--------+---------+------+----------+--------+---------+---------+----------------+-------------+-----------+
+
+14)
+SELECT * FROM EMP WHERE SAL=(SELECT MAX(SAL) FROM EMP);
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+| EMPNO | EFNAME | ELNAME | JOB  | DEPTNAME | DEPTNO | ECITY     | SAL     | WORKEXPERIENCE | MANAGERNAME | MANAGERNO |
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+|     5 | ABHI   | MANO   | CEO  | ALL      |      5 | BANGALORE | 5000000 |              5 | MANAGER5    |         5 |
++-------+--------+--------+------+----------+--------+-----------+---------+----------------+-------------+-----------+
+
+2.
+1)
+CREATE TABLE Depositor(CUSNAME VARCHAR(20), ACC_NO VARCHAR(20) );
+
+CREATE TABLE Borrower( CUSNAME VARCHAR(20), LOAN_NO VARCHAR(20) );
+
+ALTER TABLE Depositor
+    -> ADD PRIMARY KEY(ACC_NO);
+
+ALTER TABLE Borrower ADD PRIMARY KEY(LOAN_NO);
+
+INSERT INTO Depositor VALUES('Soma',1),('Sanjiv',2),('Sri',3),('Nitin',4),('Mano',5);
+
+INSERT INTO Borrower VALUES('Soma',1),('Sanjiv',2),('Sri',3),('Nitin',4),('Mano',5);
+
+2)
+SELECT CUSNAME FROM Depositor INTERSECT SELECT CUSNAME FROM Borrower;
++---------+
+| CUSNAME |
++---------+
+| Soma    |
+| Sanjiv  |
+| Sri     |
+| Nitin   |
+| Mano    |
++---------+
+
+3)
+SELECT CUSNAME FROM Depositor EXCEPT SELECT CUSNAME FROM Borrower;
+Empty set
+
+4)
+SELECT CUSNAME FROM Depositor UNION SELECT CUSNAME FROM Borrower;
++---------+
+| CUSNAME |
++---------+
+| Soma    |
+| Sanjiv  |
+| Sri     |
+| Nitin   |
+| Mano    |
++---------+

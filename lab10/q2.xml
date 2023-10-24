@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Tue Oct 24 11:12:30 IST 2023 -->
+
+
+<StudentDetails> 
+    <Students> 
+        <STUID>1</STUID>
+        <SName>Soma</SName>
+        <Course>SE</Course>
+        <Dept>CSE</Dept>
+        <subject>1</subject>
+        <Marks>100</Marks>
+        <Marks>13</Marks>
+    </Students>
+    
+    <Students> 
+        <STUID>2</STUID>
+        <SName>Sanjiv</SName>
+        <Course>Devops</Course>
+        <Dept>CSE</Dept>
+        <subject>1</subject>
+        <Marks>99</Marks>
+        <Marks>12</Marks>
+    </Students>
+    
+    <Students> 
+        <STUID>3</STUID>
+        <SName>Sri</SName>
+        <Course>Networks</Course>
+        <Dept>ECE</Dept>
+        <subject>2</subject>
+        <Marks>98</Marks>
+        <Marks>43</Marks>
+    </Students>
+    
+    <Students> 
+        <STUID>4</STUID>
+        <SName>Mano</SName>
+        <Course>Analog</Course>
+        <Dept>ICE</Dept>
+        <subject>13</subject>
+        <Marks>20</Marks>
+        <Marks>79</Marks>
+    </Students>
+    
+    <Students> 
+        <STUID>5</STUID>
+        <SName>Nitin</SName>
+        <Course>Electronics</Course>
+        <Dept>EEE</Dept>
+        <subject>1</subject>
+        <Marks>10</Marks>
+        <Marks>99</Marks>
+    </Students>
+</StudentDetails> 
+

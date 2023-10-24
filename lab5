@@ -1,0 +1,309 @@
+-- create table STUDENT (roll_no int, name varchar(30), address varchar(30), phone int, age int);
+
+
+
+-- insert into STUDENT values (106121116, 'Sanjiv Kannaa', 'zircon b', 1, 20);
+-- insert into STUDENT values (106121086, 'nithin', 'zircon b', 2, 19);
+-- insert into STUDENT values (106121074, 'bhoopesh', 'zircon b', 3, 21);
+-- insert into STUDENT values (106121118, 'newstudent', 'zircon b', 4, 20);
+
+
+-- create table STUDENTCOURSE (courseid int, rollno int);
+
+
+-- insert into STUDENTCOURSE values (1, 106121116);
+-- insert into STUDENTCOURSE values (2, 106121116);
+-- insert into STUDENTCOURSE values (3, 106121116);
+-- insert into STUDENTCOURSE values (1, 106121086);
+-- insert into STUDENTCOURSE values (2, 106121086);
+-- insert into STUDENTCOURSE values (1, 106121074);
+-- insert into STUDENTCOURSE values (1, 106121122);
+
+
+
+Q1
+mysql> select * from STUDENT INNER JOIN STUDENTCOURSE on STUDENT.roll_no = STUDENTCOURSE.rollno;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
++-----------+---------------+----------+-------+------+----------+-----------+
+6 rows in set (0.00 sec)
+
+
+Q2
+mysql> select * from STUDENT LEFT JOIN STUDENTCOURSE on STUDENT.roll_no = STUDENTCOURSE.rollno;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |     NULL |      NULL |
++-----------+---------------+----------+-------+------+----------+-----------+
+7 rows in set (0.00 sec)
+
+
+Q3
+mysql> select * from STUDENT RIGHT JOIN STUDENTCOURSE on STUDENT.roll_no = STUDENTCOURSE.rollno;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
+|      NULL | NULL          | NULL     |  NULL | NULL |        1 | 106121122 |
++-----------+---------------+----------+-------+------+----------+-----------+
+7 rows in set (0.00 sec)
+
+
+Q4
+mysql> select * from STUDENT FULL JOIN STUDENTCOURSE;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121118 | newstudent    | zircon b |     4 |   20 |        1 | 106121116 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        2 | 106121116 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        2 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        3 | 106121116 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        3 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        3 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        1 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121086 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        2 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        2 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121086 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        1 | 106121074 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121074 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121074 |
+| 106121118 | newstudent    | zircon b |     4 |   20 |        1 | 106121122 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121122 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121122 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121122 |
++-----------+---------------+----------+-------+------+----------+-----------+
+28 rows in set, 1 warning (0.01 sec)
+
+
+Q5
+mysql> select * from STUDENT NATURAL JOIN STUDENTCOURSE where STUDENT.roll_no = STUDENTCOURSE.rollno;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
++-----------+---------------+----------+-------+------+----------+-----------+
+6 rows in set (0.00 sec)
+
+
+
+Q6
+mysql> select * from STUDENT JOIN STUDENTCOURSE where roll_no=106121116;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121086 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121086 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121074 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121122 |
++-----------+---------------+----------+-------+------+----------+-----------+
+7 rows in set (0.01 sec)
+
+
+
+Q7
+equi join and inner join are the same
+mysql> select * from STUDENT INNER JOIN STUDENTCOURSE on STUDENT.roll_no = STUDENTCOURSE.rollno;
++-----------+---------------+----------+-------+------+----------+-----------+
+| roll_no   | name          | address  | phone | age  | courseid | rollno    |
++-----------+---------------+----------+-------+------+----------+-----------+
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        1 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        2 | 106121116 |
+| 106121116 | Sanjiv Kannaa | zircon b |     1 |   20 |        3 | 106121116 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        1 | 106121086 |
+| 106121086 | nithin        | zircon b |     2 |   19 |        2 | 106121086 |
+| 106121074 | bhoopesh      | zircon b |     3 |   21 |        1 | 106121074 |
++-----------+---------------+----------+-------+------+----------+-----------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q1
+
+-- create table customer(cust_id int,cust_name varchar(20), primary key(Cust_id));
+-- create table item(item_id int,item_name varchar(20),price int, primary key(item_id));
+-- create table sale(bill_no int,bill_date date,cust_id int,item_id int,qty_sold int, primary key(bill_no), foreign key(cust_id) refences customer(cust_id), foreign key(item_id) references item(item_id));
+
+
+
+-- insert into customer values(1,'Sanjiv Kannaa J');
+-- insert into customer values(2,'Nithin');
+-- insert into customer values(3,'Sri Vignesh');
+-- insert into customer values(4,'Sri Kanth');
+-- insert into customer values(5,'Bhoopesh');
+-- insert into customer values(6,'JSK');
+-- insert into customer values(7,'vijay');
+-- insert into customer values(8,'Appruval');
+-- insert into customer values(9,'Abinav');
+-- insert into customer values(10,'SKM');
+
+
+-- insert into item values(1,'Computer',1000);
+-- insert into item values(2,'Mouse',120);
+-- insert into item values(3,'Keyboard',130);
+-- insert into item values(4,'CPU',250);
+-- insert into item values(5,'Cable',10);
+-- insert into item values(6,'Watch',60);
+-- insert into item values(7,'Phone',580);
+-- insert into item values(8,'Laptop',900);
+-- insert into item values(9,'Glass',75);
+-- insert into item values(10,'Clock',50);
+
+
+-- insert into sale values(1,'2021-02-21',1,1,200);
+-- insert into sale values(2,'2021-04-16',2,2,1200);
+-- insert into sale values(3,'2021-03-08',3,3,500);
+-- insert into sale values(4,'2021-05-12',4,4,900);
+-- insert into sale values(5,'2021-08-24',5,5,2400);
+-- insert into sale values(6,'2022-08-24',6,6,1000);
+-- insert into sale values(7,'2022-08-24',7,7,400);
+-- insert into sale values(8,'2023-08-24',8,8,240);
+-- insert into sale values(9,'2023-08-24',9,9,750);
+-- insert into sale values(10,'2023-08-24',10,10,1500);
+
+
+
+
+
+Q2
+mysql> create view viewq2 as (select bill_no, bill_date, cust_id, item.item_id, price, qty_sold, qty_sold*price as amount from item inner join sale on item.item_id=sale.item_id);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> select * from viewq2;
++---------+------------+---------+---------+-------+----------+--------+
+| bill_no | bill_date  | cust_id | item_id | price | qty_sold | amount |
++---------+------------+---------+---------+-------+----------+--------+
+|       1 | 2021-02-21 |       1 |       1 |  1000 |      200 | 200000 |
+|       2 | 2021-04-16 |       2 |       2 |   120 |     1200 | 144000 |
+|       3 | 2021-03-08 |       3 |       3 |   130 |      500 |  65000 |
+|       4 | 2021-05-12 |       4 |       4 |   250 |      900 | 225000 |
+|       5 | 2021-08-24 |       5 |       5 |    10 |     2400 |  24000 |
+|       6 | 2022-08-24 |       6 |       6 |    60 |     1000 |  60000 |
+|       7 | 2022-08-24 |       7 |       7 |   580 |      400 | 232000 |
+|       8 | 2023-08-24 |       8 |       8 |   900 |      240 | 216000 |
+|       9 | 2023-08-24 |       9 |       9 |    75 |      750 |  56250 |
+|      10 | 2023-08-24 |      10 |      10 |    50 |     1500 |  75000 |
++---------+------------+---------+---------+-------+----------+--------+
+10 rows in set (0.00 sec)
+
+
+Q3
+mysql> create view viewq3 as (select * from sale where bill_date>'2023-08-22' ORDER BY bill_date);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> select * from viewq3;
++---------+------------+---------+---------+----------+
+| bill_no | bill_date  | cust_id | item_id | qty_sold |
++---------+------------+---------+---------+----------+
+|       8 | 2023-08-24 |       8 |       8 |      240 |
+|       9 | 2023-08-24 |       9 |       9 |      750 |
+|      10 | 2023-08-24 |      10 |      10 |     1500 |
++---------+------------+---------+---------+----------+
+3 rows in set (0.03 sec)
+
+
+Q4
+mysql> select item_name, price*qty_sold as total_price from item inner join sale on item.item_id = sale.item_id order by total_price desc limit 5;
++-----------+-------------+
+| item_name | total_price |
++-----------+-------------+
+| Phone     |      232000 |
+| CPU       |      225000 |
+| Laptop    |      216000 |
+| Computer  |      200000 |
+| Mouse     |      144000 |
++-----------+-------------+
+5 rows in set (0.00 sec)
+
+
+
+
+Q5
+mysql> (select cust_name, sum(qty_sold*price), 'platinum' as lvl from sale, customer, item where bill_date like '2021%' and sale.cust_id=customer.cust_id and sale.item_id=item.item_id group by customer.cust_name having sum(qty_sold*price)>50000) union 
+    -> (select cust_name, sum(qty_sold*price), 'gold' as lvl from sale, customer, item where bill_date like '2021%' and sale.cust_id=customer.cust_id and sale.item_id=item.item_id group by customer.cust_name having sum(qty_sold*price)>10000 and sum(qty_sold*price)<50000) UNION
+    -> (select cust_name, sum(qty_sold*price), 'silver' as lvl from sale, customer, item where bill_date like '2021%' and sale.cust_id=customer.cust_id and sale.item_id=item.item_id group by customer.cust_name having sum(qty_sold*price)>10000 and sum(qty_sold*price)<10000)
+    -> ;
++-----------------+---------------------+----------+
+| cust_name       | sum(qty_sold*price) | lvl      |
++-----------------+---------------------+----------+
+| Sanjiv Kannaa J |              200000 | platinum |
+| Nithin          |              144000 | platinum |
+| Sri Vignesh     |               65000 | platinum |
+| Sri Kanth       |              225000 | platinum |
+| Bhoopesh        |               24000 | gold     |
++-----------------+---------------------+----------+
+5 rows in set (0.00 sec)
+
+
+
+Q6
+mysql> select cust_name, price*qty_sold as total_amount from customer inner join item inner join sale on customer.cust_id=sale.cust_id and item.item_id=sale.item_id where bill_date like '2021%' order by total_amount desc limit 5;
++-----------------+--------------+
+| cust_name       | total_amount |
++-----------------+--------------+
+| Sri Kanth       |       225000 |
+| Sanjiv Kannaa J |       200000 |
+| Nithin          |       144000 |
+| Sri Vignesh     |        65000 |
+| Bhoopesh        |        24000 |
++-----------------+--------------+
+5 rows in set (0.01 sec)

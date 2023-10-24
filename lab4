@@ -1,0 +1,139 @@
+mysql> create table EMP (employee_id int, first_name varchar(20), last_name varchar(20), email varchar(20), phone_number varchar(30), hire_date date, job_id varchar(30), commissino_pct float, manager_id int, department_id int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table DEPT (department_id int, department_name varchar(20), manager_id int, location_id int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table LOCA (location_id int, street_address varchar(30), postal_code int, city varchar(10), stata_province varchar(30), country_id int);
+Query OK, 0 rows affected (0.03 sec)
+
+insert into EMP values (1, "sanjiv", "lastname1", "emp1@company.org", "0000000001", "2023-08-24", "IT_PROG", 10.1 ,1, 1);
+insert into EMP values (2, "soma", "lastname2", "emp2@company.org", "0000000002", "2023-08-24", "IT_PROG", 10.2 ,1, 1);
+insert into EMP values (3, "sri", "lastname3", "emp3@company.org", "0000000003", "2023-08-24", "AD_PRESS", 10.3 ,2, 2);
+insert into EMP values (134, "vignesh", "lastname134", "emp1@company.org", "0000000004", "2023-08-24", "IT_PROG", 10.4 ,1, 1);
+insert into EMP values (159, "mano", "lastname159", "emp1@company.org", "0000000005", "2023-08-24", "IT_PROG", 10.5 ,1, 1);
+insert into EMP values (183, "nithin", "lastname183", "emp1@company.org", "0000000006", "2023-08-24", "IT_PROG", 10.6 ,1, 1);
+insert into EMP values (8, "jaman", "lastname8", "emp8@company.org", "0000000007", "2023-08-24", "AD_PRESS", 10.7 ,2, 2);
+insert into EMP values (9, "bhoop", "lastname9", "emp9@company.org", "0000000008", "2023-08-24", "AD_PRESS", 10.8 ,2, 2);
+
+
+insert into DEPT values (1, "IT", 1, 1);
+insert into DEPT values (2, "Administration", 2, 2);
+
+
+insert into LOCA values (1, "IT_BUILDING", 1, "Trichy", "TN", 1);
+insert into LOCA values (2, "ADMIN_BLOCK", 2, "Trichy", "TN", 1);
+
+
+
+Q1
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where employee_id in (134, 159, 183);
++-------------+------------+-------------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name   | email            | phone_number | hire_date  | job_id  | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-------------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|         134 | vignesh    | lastname134 | emp1@company.org | 0000000004   | 2023-08-24 | IT_PROG |           10.4 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         159 | mano       | lastname159 | emp1@company.org | 0000000005   | 2023-08-24 | IT_PROG |           10.5 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         183 | nithin     | lastname183 | emp1@company.org | 0000000006   | 2023-08-24 | IT_PROG |           10.6 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
++-------------+------------+-------------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+
+
+
+
+
+
+Q2
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where EMP.department_id not in (select department_id from DEPT where manager_id between 100 and 200);
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name   | email            | phone_number | hire_date  | job_id   | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|           1 | sanjiv     | lastname1   | emp1@company.org | 0000000001   | 2023-08-24 | IT_PROG  |           10.1 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           2 | soma       | lastname2   | emp2@company.org | 0000000002   | 2023-08-24 | IT_PROG  |           10.2 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           3 | sri        | lastname3   | emp3@company.org | 0000000003   | 2023-08-24 | AD_PRESS |           10.3 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
+|         134 | vignesh    | lastname134 | emp1@company.org | 0000000004   | 2023-08-24 | IT_PROG  |           10.4 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         159 | mano       | lastname159 | emp1@company.org | 0000000005   | 2023-08-24 | IT_PROG  |           10.5 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         183 | nithin     | lastname183 | emp1@company.org | 0000000006   | 2023-08-24 | IT_PROG  |           10.6 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           8 | jaman      | lastname8   | emp8@company.org | 0000000007   | 2023-08-24 | AD_PRESS |           10.7 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
+|           9 | bhoop      | lastname9   | emp9@company.org | 0000000008   | 2023-08-24 | AD_PRESS |           10.8 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+
+Q3
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where EMP.commissino_pct in (select max(commissino_pct) from EMP where commissino_pct not in (select max(commissino_pct) from EMP));
++-------------+------------+-----------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name | email            | phone_number | hire_date  | job_id   | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-----------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|           8 | jaman      | lastname8 | emp8@company.org | 0000000007   | 2023-08-24 | AD_PRESS |           10.7 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
++-------------+------------+-----------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+1 row in set (0.00 sec)
+
+
+Q4
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where EMP.commissino_pct in (select min(commissino_pct) from EMP where commissino_pct not in (select min(commissino_pct) from EMP));
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name | email            | phone_number | hire_date  | job_id  | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|           2 | soma       | lastname2 | emp2@company.org | 0000000002   | 2023-08-24 | IT_PROG |           10.2 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where exists (select DISTINCT(manager_id) from EMP);
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name | email            | phone_number | hire_date  | job_id  | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|           1 | sanjiv     | lastname1 | emp1@company.org | 0000000001   | 2023-08-24 | IT_PROG |           10.1 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           2 | soma       | lastname2 | emp2@company.org | 0000000002   | 2023-08-24 | IT_PROG |           10.2 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
++-------------+------------+-----------+------------------+--------------+------------+---------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+2 rows in set (0.00 sec)
+
+
+
+Q5
+mysql> select DISTINCT(DEPT.department_name) from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id;
++-----------------+
+| department_name |
++-----------------+
+| IT              |
+| Administration  |
++-----------------+
+2 rows in set (0.00 sec)
+
+
+Q6
+mysql> select first_name, last_name, DEPT.department_name from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where exists (select commissino_pct from EMP where commissino_pct > 3700);
+Empty set (0.00 sec)
+
+Q7
+
+
+Q8
+select employee_id, first_name, last_name from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where exists (select commissino_pct from EMP where commissino_pct > 3700);
+
+
+Q13
+
+
+Q14
+mysql> select first_name, last_name, commissino_pct as salary, EMP.department_id from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where EMP.commissino_pct in (select commissino_pct from EMP where commissino_pct > (select avg(commissino_pct) from EMP)) order by EMP.commissino_pct desc ;
++------------+-------------+--------+---------------+
+| first_name | last_name   | salary | department_id |
++------------+-------------+--------+---------------+
+| bhoop      | lastname9   |   10.8 |             2 |
+| jaman      | lastname8   |   10.7 |             2 |
+| nithin     | lastname183 |   10.6 |             1 |
+| mano       | lastname159 |   10.5 |             1 |
++------------+-------------+--------+---------------+
+
+Q15
+mysql> select * from EMP inner JOIN DEPT inner JOIN LOCA  on EMP.department_id=DEPT.department_id and DEPT.location_id=LOCA.location_id where EMP.commissino_pct in (select commissino_pct from EMP where commissino_pct between (select min(commissino_pct) from EMP) and 2500);
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+| employee_id | first_name | last_name   | email            | phone_number | hire_date  | job_id   | commissino_pct | manager_id | department_id | department_id | department_name | manager_id | location_id | location_id | street_address | postal_code | city   | stata_province | country_id |
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+|           1 | sanjiv     | lastname1   | emp1@company.org | 0000000001   | 2023-08-24 | IT_PROG  |           10.1 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           2 | soma       | lastname2   | emp2@company.org | 0000000002   | 2023-08-24 | IT_PROG  |           10.2 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         134 | vignesh    | lastname134 | emp1@company.org | 0000000004   | 2023-08-24 | IT_PROG  |           10.4 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         159 | mano       | lastname159 | emp1@company.org | 0000000005   | 2023-08-24 | IT_PROG  |           10.5 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|         183 | nithin     | lastname183 | emp1@company.org | 0000000006   | 2023-08-24 | IT_PROG  |           10.6 |          1 |             1 |             1 | IT              |          1 |           1 |           1 | IT_BUILDING    |           1 | Trichy | TN             |          1 |
+|           3 | sri        | lastname3   | emp3@company.org | 0000000003   | 2023-08-24 | AD_PRESS |           10.3 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
+|           8 | jaman      | lastname8   | emp8@company.org | 0000000007   | 2023-08-24 | AD_PRESS |           10.7 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
+|           9 | bhoop      | lastname9   | emp9@company.org | 0000000008   | 2023-08-24 | AD_PRESS |           10.8 |          2 |             2 |             2 | Administration  |          2 |           2 |           2 | ADMIN_BLOCK    |           2 | Trichy | TN             |          1 |
++-------------+------------+-------------+------------------+--------------+------------+----------+----------------+------------+---------------+---------------+-----------------+------------+-------------+-------------+----------------+-------------+--------+----------------+------------+
+8 rows in set (0.00 sec)

@@ -1,0 +1,256 @@
+CREATE TABLE emp (empno int primary key, ename varchar(20), job varchar(10), deptno int, sal float);
+INSERT INTO emp values(1,'Sanjiv Kannaa', 'devops', 1, 30000);
+INSERT INTO emp values(2,'Sri Vignesh', 'SDE', 1, 50000);
+INSERT INTO emp values(3,'EVR', 'SDE', 1, 50000);
+INSERT INTO emp values(4,'Soma', 'SDE', 1, 60000);
+INSERT INTO emp values(5,'Appruval', 'prod', 2, 3000);
+INSERT INTO emp values(6,'shubham', 'prod', 2, 0);
+INSERT INTO emp values(7,'mano', 'prod', 2, 20);
+INSERT INTO emp values(8,'bhoopesh', 'prod', 2, 200);
+INSERT INTO emp values(9,'nithin', 'design', 3, 500000);
+
+
+CREATE TABLE dept (deptno int primary key, dname varchar(10), loc varchar(10));
+INSERT INTO dept values (1, 'it', 'mumbai');
+INSERT INTO dept values (2, 'prod', 'chennai');
+INSERT INTO dept values (3, 'design', 'chennai');
+
+
+
+
+
+Q1
+
+delimiter //
+
+create procedure q1(IN eno int)
+BEGIN
+    select * from emp where empno = eno;
+end;
+//
+
+delimiter ; //
+
+
+mysql> call q1(3);
++-------+-------+------+--------+-------+
+| empno | ename | job  | deptno | sal   |
++-------+-------+------+--------+-------+
+|     3 | EVR   | SDE  |      1 | 50000 |
++-------+-------+------+--------+-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+
+
+Q2
+
+delimiter //
+
+create procedure q2(IN empnov int, IN enamev varchar(10), IN jobv varchar(20), IN deptnov int, IN salv int)
+BEGIN
+    INSERT INTO emp values(empnov,enamev,jobv,deptnov,salv);
+end;
+//
+
+delimiter ; //
+
+mysql> call q2(10, "alien", "backenddev", 1, 0);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from emp;
++-------+---------------+------------+--------+--------+
+| empno | ename         | job        | deptno | sal    |
++-------+---------------+------------+--------+--------+
+|     1 | Sanjiv Kannaa | devops     |      1 |  30000 |
+|     2 | Sri Vignesh   | SDE        |      1 |  50000 |
+|     3 | EVR           | SDE        |      1 |  50000 |
+|     4 | Soma          | SDE        |      1 |  60000 |
+|     5 | Appruval      | prod       |      2 |   3000 |
+|     6 | shubham       | prod       |      2 |      0 |
+|     7 | mano          | prod       |      2 |     20 |
+|     8 | bhoopesh      | prod       |      2 |    200 |
+|     9 | nithin        | design     |      3 | 500000 |
+|    10 | alien         | backenddev |      1 |      0 |
++-------+---------------+------------+--------+--------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+
+Q3
+CREATE PROCEDURE q3(in id int, IN X INT) UPDATE emp SET sal = sal + X WHERE empno = id;
+
+mysql> call q3(1,10000);
+Query OK, 0 rows affected (0.03 sec)
+
+
+
+Q4
+CREATE PROCEDURE q4(IN NAME VARCHAR(20)) DELETE FROM emp WHERE ename = NAME;
+
+mysql> call q4('alien');
+Query OK, 1 row affected (0.10 sec)
+
+Q5
+delimiter //
+
+CREATE FUNCTION q5 () RETURNS INT DETERMINISTIC  
+BEGIN RETURN (SELECT MIN(sal) FROM  emp); END;//
+
+delimiter ; //
+
+mysql> SELECT  q5() AS MS;
+    -> //
++------+
+| MS   |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+
+Q6
+delimiter //
+
+CREATE FUNCTION q6 () 
+RETURNS INT DETERMINISTIC 
+BEGIN RETURN (SELECT COUNT(*) FROM emp); END;//
+
+delimiter ; //
+
+mysql> select q6();
++------+
+| q6() |
++------+
+|   10 |
++------+
+1 row in set (0.00 sec)
+
+
+Q7
+delimiter //
+
+CREATE FUNCTION q7 (N INT ) RETURNS INT DETERMINISTIC  BEGIN RETURN (SELECT sal FROM emp WHERE empno = N); END;//
+
+delimiter ; //
+
+
+mysql> select q7(5);
++-------+
+| q7(5) |
++-------+
+|  3000 |
++-------+
+1 row in set (0.00 sec)
+
+
+
+Q8
+delimiter //
+
+CREATE FUNCTION q8 (DN INT ) 
+RETURNS INT DETERMINISTIC  
+BEGIN 
+RETURN (SELECT AVG(sal) FROM emp WHERE deptno = DN); 
+END;//
+
+delimiter ; //
+
+select q8(1);
++-------+
+| q8(1) |
++-------+
+| 38000 |
++-------+
+1 row in set (0.00 sec)
+
+
+Q9
+delimiter //
+
+create procedure q9(IN deptnov int)
+BEGIN
+    select * from emp where deptno = deptnov;
+end;
+//
+
+delimiter ; //
+
+
+mysql> call q9(5);
+Empty set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+Q10
+delimiter //
+
+create procedure dept_highest()
+BEGIN
+    select deptno, max(sal) from emp group by deptno;
+end;
+//
+
+delimiter ; //
+mysql> call dept_highest();
++--------+----------+
+| deptno | max(sal) |
++--------+----------+
+|      1 |    60000 |
+|      2 |     3000 |
+|      3 |   500000 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+Q11
+delimiter //
+
+CREATE FUNCTION q11 (DN INT ) RETURNS INT DETERMINISTIC  BEGIN RETURN (SELECT COUNT(*) FROM emp WHERE sal > DN); END;//
+
+delimiter ; //
+
+mysql> select q11(3000);
++-----------+
+| q11(3000) |
++-----------+
+|         5 |
++-----------+
+1 row in set (0.01 sec))
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+Q12
+delimiter //
+
+CREATE FUNCTION q12() 
+RETURNS INT DETERMINISTIC  BEGIN RETURN (SELECT COUNT(*) FROM emp,dept  WHERE emp.deptno = dept.deptno AND loc = 'MUMBAI'); END;//
+
+delimiter ; //
+
+mysql> select q12();
++-------+
+| q12() |
++-------+
+|     5 |
++-------+
+1 row in set (0.00 sec)
+

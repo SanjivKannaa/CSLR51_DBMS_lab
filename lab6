@@ -1,0 +1,217 @@
+Q1
+
+CREATE TABLE course (coursenum INT primary key, coursename VARCHAR(20));
+CREATE TABLE section (sectionnum INT primary key, term INT);
+CREATE TABLE professor (profnum INT primary key, profname INT, sectionnum INT, coursenum INT);
+CREATE TABLE student (studentnum INT primary key, studentname VARCHAR(30), GPA INT, sectionnum INT, coursenum INT);
+CREATE TABLE offsitesection (location VARCHAR(30), sectionnum INT);
+ALTER TABLE professor ADD CONSTRAINT FOREIGN KEY professor_fk(sectionnum) REFERENCES section(sectionnum);
+ALTER TABLE student ADD CONSTRAINT FOREIGN KEY student_fk(sectionnum) REFERENCES section(sectionnum);
+
+mysql> DESC course;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| coursenum  | int         | NO   | PRI | NULL    |       |
+| coursename | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESC section;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| sectionnum | int  | NO   | PRI | NULL    |       |
+| term       | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> DESC professor;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| profnum    | int  | NO   | PRI | NULL    |       |
+| profname   | int  | YES  |     | NULL    |       |
+| sectionnum | int  | YES  | MUL | NULL    |       |
+| coursenum  | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentnum  | int         | NO   | PRI | NULL    |       |
+| studentname | varchar(30) | YES  |     | NULL    |       |
+| GPA         | int         | YES  |     | NULL    |       |
+| sectionnum  | int         | YES  | MUL | NULL    |       |
+| coursenum   | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESC offsitesection;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| location   | varchar(30) | YES  |     | NULL    |       |
+| sectionnum | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> DESC course;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| coursenum  | int         | NO   | PRI | NULL    |       |
+| coursename | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.13 sec)
+
+mysql> DESC section;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| sectionnum | int  | NO   | PRI | NULL    |       |
+| term       | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESC professor;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| profnum    | int  | NO   | PRI | NULL    |       |
+| profname   | int  | YES  |     | NULL    |       |
+| sectionnum | int  | YES  | MUL | NULL    |       |
+| coursenum  | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESC student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentnum  | int         | NO   | PRI | NULL    |       |
+| studentname | varchar(30) | YES  |     | NULL    |       |
+| GPA         | int         | YES  |     | NULL    |       |
+| sectionnum  | int         | YES  | MUL | NULL    |       |
+| coursenum   | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESC offsitesection;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| location   | varchar(30) | YES  |     | NULL    |       |
+| sectionnum | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+Q2
+CREATE TABLE product (barcode VARCHAR(10) primary key, pname VARCHAR(20), price int, quantityinstock int);
+CREATE TABLE sale (saleid INT primary key, deliveryaddress VARCHAR(20), creditcard int);
+CREATE TABLE saleitem (saleid INT primary key, barcode VARCHAR(10), quantity int);
+
+Delimiter $$
+CREATE TRIGGER updateAvailabilityQuantity
+AFTER INSERT
+ON saleitem
+FOR EACH ROW BEGIN
+UPDATE product
+SET product.quantityinstock = product.quantityinstock - NEW.quantity
+WHERE NEW.barcode = product.barcode;
+END;
+$$
+Delimiter ;
+
+select * from product;
++---------+-------+-------+-----------------+
+| barcode | pname | price | quantityinstock |
++---------+-------+-------+-----------------+
+| abcd    | phone |    10 |              10 |
++---------+-------+-------+-----------------+
+1 row in set (0.00 sec)
+
+insert into product values ('abcd', 'phone', 10, 10);
+insert into saleitem values (1, 'abcd', 1);
+
+select * from product;
++---------+-------+-------+-----------------+
+| barcode | pname | price | quantityinstock |
++---------+-------+-------+-----------------+
+| abcd    | phone |    10 |               9 |
++---------+-------+-------+-----------------+
+1 row in set (0.00 sec)
+
+
+Q3
+create table emp (e_no integer(5) primary key, e_name varchar(20), pos varchar(20), man_id integer(5), salary integer(5), foreign key(man_id) references emp(e_no));
+create table dept (d_no integer(5) primary key, d_name varchar(20));
+create table company (e_no integer(5), d_no integer(5), joinDate date, foreign key(e_no) references emp(e_no) on delete cascade, foreign key(d_no) references dept(d_no) on update cascade);
+insert into dept values (11,'Sales'),(22,'Development'),(33,'cleaning');
+insert into emp values (1,'Ajay','guard',1,200),(2,'Aman','sde1',1,1200),(3,'Amar','salesman',1,800),(4,'Ram','manager',1,1600),(5,'Avi','sde2',1,1800);
+insert into company values (1,33,'2022-3-11'),(2,22,'2022-6-3'),(3,11,'2022-5-2'),(4,11,'2022-3-21'),(5,22,'2022-7-1');
+
+
+(i)
+mysql> select * from emp;
++------+--------+----------+--------+--------+
+| e_no | e_name | pos      | man_id | salary |
++------+--------+----------+--------+--------+
+|    1 | Ajay   | guard    |      1 |    200 |
+|    2 | Aman   | sde1     |      1 |   1200 |
+|    3 | Amar   | salesman |      1 |    800 |
+|    4 | Ram    | manager  |      1 |   1600 |
+|    5 | Avi    | sde2     |      1 |   1800 |
++------+--------+----------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from emp where e_no = 3;
+Query OK, 1 row affected (0.22 sec)
+
+mysql> select * from emp;
++------+--------+---------+--------+--------+
+| e_no | e_name | pos     | man_id | salary |
++------+--------+---------+--------+--------+
+|    1 | Ajay   | guard   |      1 |    200 |
+|    2 | Aman   | sde1    |      1 |   1200 |
+|    4 | Ram    | manager |      1 |   1600 |
+|    5 | Avi    | sde2    |      1 |   1800 |
++------+--------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+
+(ii)
+mysql> select * from dept;
++------+-------------+
+| d_no | d_name      |
++------+-------------+
+|   11 | Sales       |
+|   22 | Development |
+|   33 | cleaning    |
++------+-------------+
+3 rows in set (0.00 sec)
+
+
+mysql> update dept set d_no = 12 where d_no = 11;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> select * from dept;
++------+-------------+
+| d_no | d_name      |
++------+-------------+
+|   12 | Sales       |
+|   22 | Development |
+|   33 | cleaning    |
++------+-------------+
+3 rows in set (0.00 sec)
+
+
+(iii)
+-- check in create table part

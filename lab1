@@ -1,0 +1,107 @@
+1.)Done
+
+2.)use db;
+i.)CREATE TABLE EMP( EMPNO INT, ENAME VARCHAR(20) NOT NULL, JOB VARCHAR(10) NOT NULL, DEPTNO INT, SAL INT );
+DESC EMP;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EMPNO  | int         | YES  |     | NULL    |       |
+| ENAME  | varchar(20) | NO   |     | NULL    |       |
+| JOB    | varchar(10) | YES  |     | NULL    |       |
+| DEPTNO | int         | YES  |     | NULL    |       |
+| SAL    | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+ii.)ALTER TABLE EMP ADD experience INT;
+DESC EMP;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMPNO      | int         | YES  |     | NULL    |       |
+| ENAME      | varchar(20) | NO   |     | NULL    |       |
+| JOB        | varchar(10) | NO   |     | NULL    |       |
+| DEPTNO     | int         | YES  |     | NULL    |       |
+| SAL        | int         | YES  |     | NULL    |       |
+| experience | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+iii.)ALTER TABLE EMP MODIFY JOB VARCHAR(15);
+DESC EMP;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EMPNO  | int         | YES  |     | NULL    |       |
+| ENAME  | varchar(20) | NO   |     | NULL    |       |
+| JOB    | varchar(15) | YES  |     | NULL    |       |
+| DEPTNO | int         | YES  |     | NULL    |       |
+| SAL    | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+iv.)CREATE TABLE dept(
+    -> DEPTNO INT,
+    -> DNAME VARCHAR(10),
+    -> LOC VARCHAR(10)
+    -> );
+DESC dept;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| DEPTNO | int         | YES  |     | NULL    |       |
+| DNAME  | varchar(10) | YES  |     | NULL    |       |
+| LOC    | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+v.)ALTER TABLE EMP DROP COLUMN experience;
+DESC EMP;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EMPNO  | int         | YES  |     | NULL    |       |
+| ENAME  | varchar(20) | NO   |     | NULL    |       |
+| JOB    | varchar(10) | YES  |     | NULL    |       |
+| DEPTNO | int         | YES  |     | NULL    |       |
+| SAL    | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+
+3.)
+i.)INSERT INTO dept (DEPTNO,DNAME,LOC) VALUES (1,'soma','ZIRCON');
+SELECT * FROM dept;
++--------+-------+--------+
+| DEPTNO | DNAME | LOC    |
++--------+-------+--------+
+|      1 | soma  | ZIRCON |
++--------+-------+--------+
+
+ii.)INSERT INTO EMP  VALUES(1,'soma','j1',1,2),(2,'jaman','j2',2,3) ;
+SELECT * FROM EMP;
++-------+-------+------+--------+------+
+| EMPNO | ENAME | JOB  | DEPTNO | SAL  |
++-------+-------+------+--------+------+
+|     1 | soma  | j1   |      1 |    2 |
+|     2 | jaman | j2   |      2 |    3 |
++-------+-------+------+--------+------+
+
+iii.)SELECT ENAME,JOB FROM EMP;
++-------+------+
+| ENAME | JOB  |
++-------+------+
+| soma  | j1   |
+| jaman | j2   |
++-------+------+
+
+4.)TRUNCATE EMP;
+DROP TABLE dept;
+
+5.)
+i.)create user dbuser identified by "ABcd@123";
+ii.)create database mysampledb;
+use mysampledb;
+iii.)GRANT ALL ON mysampledb TO dbuser;
+
+6.)
+REVOKE ALL ON mysampledb FROM dbuser;
+i.)create user dbuser1 identified by "Soma@21";
+ii.)GRANT SELECT ON EMP TO dbuser1;
+iii.)REVOKE SELECT ON EMP FROM dbuser1;
