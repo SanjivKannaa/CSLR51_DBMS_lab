@@ -54,13 +54,10 @@ mysql> DESC ORDER_DETAILS;
 | quantity | int  | YES  |     | NULL    |       |
 +----------+------+------+-----+---------+-------+
 
-INSERT INTO PUBLISHER VALUES(1,'Sanjiv','Trichy','India'),(2,'Soma','Trichy','India'),(3,'srivinesh','Trichy','India'),(4,'Mano','Trichy','India'),(5,'Nitin','Trichy','India')
-    -> ;
-
-INSERT INTO CATALOG VALUES(1,1,1,1,2023,7200,'SQL'),(2,2,2,2,2023,5200,'C++', 'Cotlin');
-
-INSERT INTO CATEGORY VALUES(1,'V Good'),(2,'V Good'),(3,'Exellent'),(4,'Good');
-
+INSERT INTO AUTHOR VALUES(1, "sanjiv", "Trichy", "India"), (2, "somavignesh", "Trichy", "India"), (3, "vignesh", "Trichy", "India"), (4, "mano", "Trichy", "India"), (5, "Nithin", "Trichy", "India");
+INSERT INTO PUBLISHER VALUES(1,'Sanjiv','Trichy','India'),(2,'Soma','Trichy','India'),(3,'srivinesh','Trichy','India'),(4,'Mano','Trichy','India'),(5,'Nitin','Trichy','India');
+INSERT INTO CATALOG VALUES(1,1,1,1,2023,7200),(2,2,2,2,2023,5200),(3,3,3,3,2023,5200),(4,4,4,4,2023,5200),(5,5,5,5,2023,5200);
+INSERT INTO CATEGORY VALUES(1,'V Good'),(2,'V Good'),(3,'Exellent'),(4,'Good'), (5, 'Bad');
 INSERT INTO ORDER_DETAILS VALUES(1,1,200),(2,2,230),(3,3,300),(4,4,210),(5,5,100);
 
 SELECT COUNT(author_id) FROM AUTHOR;
@@ -69,6 +66,9 @@ SELECT COUNT(author_id) FROM AUTHOR;
 +------------------+
 |                5 |
 +------------------+
+
+
+SELECT * FROM CATALOG where book_id=(SELECT book_id from ORDER_DETAILS where quantity=max(quantity));
 
 
 2.
@@ -126,28 +126,17 @@ SELECT * FROM Book WHERE Acc_no>=56782;
 | 734216 |   1982 | Algorithm design |
 +--------+--------+------------------+
 
-SELECT Acc_no AS SERIAL_NO
-    -> FROM Book;
-+-----------+
-| SERIAL_NO |
-+-----------+
-|    237235 |
-|    376112 |
-|    543211 |
-|    631523 |
-|    734216 |
-+-----------+
+SELECT Acc_no AS SERIAL_NO, Yr_pib AS YEAR, title FROM Book;
++-----------+------+------------------+
+| SERIAL_NO | YEAR | title            |
++-----------+------+------------------+
+|    237235 | 1995 | Database systems |
+|    376112 | 1992 | Machine design   |
+|    543211 | 1991 | programming      |
+|    631523 | 1992 | Compiler design  |
+|    734216 | 1982 | Algorithm design |
++-----------+------+------------------+
 
-SELECT Yr_pib AS YEAR FROM Book;
-+------+
-| YEAR |
-+------+
-| 1995 |
-| 1992 |
-| 1991 |
-| 1992 |
-| 1982 |
-+------+
 
 3.
 CREATE TABLE branch(branch_name VARCHAR(20),branch_city VARCHAR(20),assets VARCHAR(20));

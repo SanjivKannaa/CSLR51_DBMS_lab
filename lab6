@@ -111,6 +111,22 @@ mysql> DESC offsitesection;
 2 rows in set (0.00 sec)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Q2
 CREATE TABLE product (barcode VARCHAR(10) primary key, pname VARCHAR(20), price int, quantityinstock int);
 CREATE TABLE sale (saleid INT primary key, deliveryaddress VARCHAR(20), creditcard int);
